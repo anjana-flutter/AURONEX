@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#0a0a0a] overflow-x-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auronex | Liquid Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- FONTS: Playfair Display + DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        gold: '#9D7422',
+                        sand: '#F5F2EB',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['DM Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #F5F2EB;
+            /* cursor: none; Removed to show default pointer */
+        }
+
+        /* NOISE OVERLAY */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.05;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iMC41Ii8+PC9zdmc+');
+        }
+
+        /* Deconstructed Nav Buttons */
+        .nav-corner {
+            position: fixed;
+            z-index: 50;
+            mix-blend-mode: difference;
+        }
+
+        /* Main Container for Skew Effect */
+        #main-content {
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+
+        /* Horizontal Scroll Section */
+        .horizontal-section {
+            width: 300%;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        /* Utility */
+        .clip-text {
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-gold selection:text-dark">
+
+    <!-- PAGE TRANSITION CURTAIN -->
+    <div id="page-transition-curtain"
+        class="fixed inset-0 bg-[#003447] z-[9999] flex items-center justify-center pointer-events-none">
+        <img src="logo_final.png" class="h-16 w-auto animate-pulse brightness-0 invert">
+    </div>
+
+    <!-- NOISE -->
+    <div class="noise-overlay"></div>
+
+    <!-- RESTORED FLOATING DOCK -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60]">
+        <div
+            class="flex items-center gap-6 px-8 py-4 bg-white/10 backdrop-blur-xl rounded-full shadow-2xl border border-white/20">
+            <a href="index.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">HOME</a>
+            <a href="services.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">SERVICES</a>
+            <a href="products.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">PRODUCTS</a>
+            <a href="about.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">ABOUT</a>
+            <a href="contact.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- RESTORED FLOATING DOCK -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[60]">
+        <div
+            class="flex items-center gap-6 px-8 py-4 bg-white/10 backdrop-blur-xl rounded-full shadow-2xl border border-white/20">
+            <a href="index.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">HOME</a>
+            <a href="services.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">SERVICES</a>
+            <a href="products.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">PRODUCTS</a>
+            <a href="about.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">ABOUT</a>
+            <a href="contact.html"
+                class="text-xs font-bold tracking-widest text-white hover:text-gold transition-colors">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- FIXED LOGO (Top Left) -->
+    <nav>
+        <div class="fixed top-8 left-8 z-50 mix-blend-difference">
+            <a href="index.html" class="block">
+                <img src="logo_final.png" alt="Auronex" class="h-16 w-auto brightness-0 invert">
+            </a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+
+        <!-- HERO: Zoom Through -->
+        <section class="h-screen w-full relative flex items-center justify-center overflow-hidden" id="hero-section">
+            <div class="absolute inset-0 z-0 opacity-40">
+                <img src="uploaded_image_1765277114618.jpg"
+                    class="w-full h-full object-cover grayscale brightness-50 parallax-img" data-speed="0.5">
+            </div>
+
+            <div class="relative z-10 text-center mix-blend-difference">
+                <h1 class="font-serif text-[12vw] leading-none text-sand opacity-90 hero-text">
+                    Seamless<br>Travel
+                </h1>
+                <p class="font-sans text-sm uppercase tracking-[0.3em] text-gold mt-6 animate-up">Liquid Intelligence
+                </p>
+            </div>
+        </section>
+
+        <!-- INTRO: Text Layout -->
+        <section class="min-h-screen flex items-center justify-center py-20 bg-dark relative z-10">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <p class="font-serif text-3xl md:text-5xl leading-tight text-sand/90">
+                    We believe in the fluidity of movement.
+                    <span class="text-gold italic">Auronex</span> bridges the gap between digital precision and physical
+                    chaos.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION: TRUST NUMBERS (Added) -->
+        <section class="py-32 bg-[#0F1112] border-y border-white/5 relative z-10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+                    <div>
+                        <span class="block text-5xl md:text-7xl font-serif text-white mb-2 counter"
+                            data-target="500">0</span>
+                        <span class="text-xs font-sans font-bold tracking-widest text-gold uppercase">Fleets
+                            Managed</span>
+                    </div>
+                    <div>
+                        <span class="block text-5xl md:text-7xl font-serif text-white mb-2 counter"
+                            data-target="2000">0</span>
+                        <span class="text-xs font-sans font-bold tracking-widest text-gold uppercase">Km Tracked</span>
+                    </div>
+                    <div>
+                        <span class="block text-5xl md:text-7xl font-serif text-white mb-2 counter"
+                            data-target="98">0</span>
+                        <span class="text-xs font-sans font-bold tracking-widest text-gold uppercase">Retention
+                            Rate</span>
+                    </div>
+                    <div>
+                        <span class="block text-5xl md:text-7xl font-serif text-white mb-2">24/7</span>
+                        <span class="text-xs font-sans font-bold tracking-widest text-gold uppercase">Global
+                            Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HORIZONTAL SCROLL: Services -->
+        <section class="h-screen bg-dark overflow-hidden relative" id="horizontal-scroll-container">
+            <div class="horizontal-section h-full flex items-center pl-24">
+
+                <!-- Intro Card -->
+                <div
+                    class="w-[80vw] md:w-[40vw] h-[70vh] flex-shrink-0 flex flex-col justify-center px-12 border-l border-white/10">
+                    <span class="text-gold text-xs tracking-widest uppercase mb-4">Our Expertise</span>
+                    <h2 class="font-serif text-6xl text-sand mb-8">The Collection</h2>
+                    <p class="text-white/50 max-w-md">Curated technologies for the modern fleet.</p>
+                </div>
+
+                <!-- Card 1: FMS -->
+                <div
+                    class="w-[80vw] md:w-[60vw] h-[70vh] flex-shrink-0 bg-[#0F1112] mx-4 relative group overflow-hidden border border-white/5">
+                    <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1000"
+                        class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700 grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 p-12">
+                        <h3 class="font-serif text-5xl text-white mb-2">FMS</h3>
+                        <p class="text-gold text-sm tracking-widest uppercase">Fleet Management</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: CRM -->
+                <div
+                    class="w-[80vw] md:w-[60vw] h-[70vh] flex-shrink-0 bg-[#0F1112] mx-4 relative group overflow-hidden border border-white/5">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000"
+                        class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700 grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 p-12">
+                        <h3 class="font-serif text-5xl text-white mb-2">CRM</h3>
+                        <p class="text-gold text-sm tracking-widest uppercase">Client Relations</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Events -->
+                <div
+                    class="w-[80vw] md:w-[60vw] h-[70vh] flex-shrink-0 bg-[#0F1112] mx-4 relative group overflow-hidden border border-white/5">
+                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1000"
+                        class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700 grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 p-12">
+                        <h3 class="font-serif text-5xl text-white mb-2">Events</h3>
+                        <p class="text-gold text-sm tracking-widest uppercase">Logistics</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: TESTIMONIALS (Added) -->
+        <section class="py-32 bg-dark relative z-10 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="font-serif text-5xl text-white mb-24 text-center">Industry Voices</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div
+                        class="p-10 border border-white/10 hover:border-gold/50 transition-colors duration-500 bg-[#0F1112]">
+                        <div class="text-gold text-xl mb-6">★★★★★</div>
+                        <p class="font-serif text-2xl text-sand/80 mb-8 leading-relaxed">"Auronex isn't just software.
+                            It's the nervous system of our operations."</p>
+                        <div>
+                            <p class="font-bold text-white tracking-wide">Rajesh K.</p>
+                            <p class="text-xs text-white/40 uppercase tracking-widest mt-1">Velvet Events</p>
+                        </div>
+                    </div>
+                    <div
+                        class="p-10 border border-white/10 hover:border-gold/50 transition-colors duration-500 bg-[#0F1112]">
+                        <div class="text-gold text-xl mb-6">★★★★★</div>
+                        <p class="font-serif text-2xl text-sand/80 mb-8 leading-relaxed">"The most fluid implementation
+                            we have ever experienced."</p>
+                        <div>
+                            <p class="font-bold text-white tracking-wide">Sarah M.</p>
+                            <p class="text-xs text-white/40 uppercase tracking-widest mt-1">Global Logistics</p>
+                        </div>
+                    </div>
+                    <div
+                        class="p-10 border border-white/10 hover:border-gold/50 transition-colors duration-500 bg-[#0F1112]">
+                        <div class="text-gold text-xl mb-6">★★★★★</div>
+                        <p class="font-serif text-2xl text-sand/80 mb-8 leading-relaxed">"It feels like the future.
+                            Fast, dark, and incredibly powerful."</p>
+                        <div>
+                            <p class="font-bold text-white tracking-wide">David L.</p>
+                            <p class="text-xs text-white/40 uppercase tracking-widest mt-1">Tech Travels</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER (Dark) -->
+        <footer class="bg-[#050505] text-white pt-24 pb-48 border-t border-white/5 relative z-10">
+            <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <!-- Increased Logo Size -->
+                    <img src="logo_final.png" class="h-16 w-auto mb-6 brightness-0 invert opacity-50">
+                </div>
+                <div>
+                    <h4 class="font-sans text-xs font-bold tracking-widest text-gold mb-6 uppercase">Platform</h4>
+                    <ul class="space-y-4 text-sm text-white/40">
+                        <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-sans text-xs font-bold tracking-widest text-gold mb-6 uppercase">Company</h4>
+                    <ul class="space-y-4 text-sm text-white/40">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Start a Project</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-sans text-xs font-bold tracking-widest text-gold mb-6 uppercase">Connect</h4>
+                    <ul class="space-y-4 text-sm text-white/40">
+                        <li>Gurugram, India</li>
+                        <li>official@auronex.com</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // 1. PAGE TRANSITION (User Requested)
+        window.addEventListener('load', () => {
+            const curtain = document.getElementById('page-transition-curtain');
+
+            // GSAP Animation: Slide Up
+            gsap.to(curtain, {
+                yPercent: -100,
+                duration: 1.2,
+                ease: "power4.inOut",
+                delay: 0.5,
+                onComplete: () => {
+                    curtain.style.display = 'none';
+                }
+            });
+
+            // Animate Hero Text
+            gsap.from(".hero-text", {
+                y: 100,
+                opacity: 0,
+                duration: 1.5,
+                delay: 1,
+                ease: "power4.out"
+            });
+        });
+
+        // 2. SMOOTH SCROLL (Lenis)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            smooth: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 3. HUMAN SCROLL SKEW (User Requested)
+        const content = document.getElementById('main-content');
+        let currentPos = window.pageYOffset;
+
+        const callDistort = function () {
+            const newPos = window.pageYOffset;
+            const diff = newPos - currentPos;
+            const speed = diff * 0.15;
+
+            if (content) {
+                // Apply a smooth skew
+                content.style.transform = `skewY(${speed}deg)`;
+            }
+
+            currentPos = newPos;
+            requestAnimationFrame(callDistort);
+        };
+        callDistort();
+
+        // Reset skew when stopped
+        let timer;
+        window.addEventListener('scroll', function () {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                if (content) content.style.transform = "skewY(0deg)";
+            }, 100);
+        });
+
+        // 4. GSAP HORIZONTAL SCROLL
+        gsap.registerPlugin(ScrollTrigger);
+
+        const sections = gsap.utils.toArray(".horizontal-section .flex-shrink-0");
+        const scrollContainer = document.querySelector(".horizontal-section");
+
+        if (scrollContainer && sections.length > 0) {
+            gsap.to(sections, {
+                xPercent: -100 * (sections.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#horizontal-scroll-container",
+                    pin: true,
+                    scrub: 1,
+                    snap: 1 / (sections.length - 1),
+                    end: () => "+=" + scrollContainer.offsetWidth
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
