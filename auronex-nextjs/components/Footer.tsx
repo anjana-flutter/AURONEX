@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Twitter, Linkedin, Instagram, ArrowRight } from "lucide-react";
-import { SITE_CONFIG, NAVIGATION } from "@/lib/data";
+import { SITE_CONFIG, NAVIGATION, SERVICES, PRODUCTS } from "@/lib/data";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -56,22 +56,13 @@ export default function Footer() {
                     <div className="lg:col-span-4">
                         <h4 className="text-white font-semibold mb-6 tracking-wide">Solutions</h4>
                         <ul className="space-y-4">
-                            {/* Manually mapping product links based on prompt requirements */}
-                            <li>
-                                <Link href="/products/crm" className="text-gray-400 hover:text-white transition-colors text-sm block">
-                                    CRM Suite
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/products/fms" className="text-gray-400 hover:text-white transition-colors text-sm block">
-                                    FMS Core
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/products/travel" className="text-gray-500 hover:text-gray-300 transition-colors text-sm flex items-center justify-between group cursor-not-allowed">
-                                    Travel Solutions <span className="text-[10px] border border-gray-700 px-1.5 rounded ml-2">SOON</span>
-                                </Link>
-                            </li>
+                            {Object.entries(PRODUCTS).map(([slug, product]) => (
+                                <li key={slug}>
+                                    <Link href={`/products/${slug}`} className="text-gray-400 hover:text-white transition-colors text-sm block">
+                                        {product.title}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>

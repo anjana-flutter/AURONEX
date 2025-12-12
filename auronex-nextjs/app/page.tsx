@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowRight, Star } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SERVICES, TESTIMONIALS, COMPANY_INFO } from '@/app/lib/data';
+import { SERVICES, SITE_CONFIG } from '@/lib/data';
 import ServiceCard from '@/components/ServiceCard';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -88,7 +88,7 @@ export default function Home() {
                         Experience the <span className="text-accent italic">Exceptional</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-gray-200 mb-10 font-light">
-                        {COMPANY_INFO.tagline}
+                        {SITE_CONFIG.description}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link href="/services" className="bg-accent text-primary font-bold py-4 px-8 rounded-full hover:bg-white transition-colors duration-300">
@@ -109,7 +109,7 @@ export default function Home() {
                         Redefining Hospitality for the Modern World
                     </h2>
                     <p className="text-gray-400 text-lg leading-relaxed">
-                        {COMPANY_INFO.description} At {COMPANY_INFO.name}, we believe that true luxury lies in the details.
+                        {SITE_CONFIG.description} At {SITE_CONFIG.name}, we believe that true luxury lies in the details.
                         We combine human empathy with cutting-edge technology to create seamless, unforgettable journeys.
                     </p>
                 </div>
@@ -129,13 +129,13 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {SERVICES.slice(0, 4).map((service) => (
-                            <div key={service.id} className="service-card">
+                        {Object.entries(SERVICES).slice(0, 4).map(([slug, service]) => (
+                            <div key={slug} className="service-card">
                                 <ServiceCard
                                     title={service.title}
-                                    description={service.shortDescription}
+                                    description={service.description}
                                     icon={service.icon}
-                                    slug={service.slug}
+                                    slug={slug}
                                 />
                             </div>
                         ))}
@@ -156,20 +156,7 @@ export default function Home() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {TESTIMONIALS.map((testimonial) => (
-                        <div key={testimonial.id} className="bg-white/5 border border-white/10 p-8 rounded-xl relative">
-                            <div className="flex text-yellow-500 mb-4">
-                                {[...Array(testimonial.stars)].map((_, i) => (
-                                    <Star key={i} size={16} fill="currentColor" />
-                                ))}
-                            </div>
-                            <p className="text-gray-300 italic mb-6">"{testimonial.content}"</p>
-                            <div>
-                                <p className="text-white font-bold">{testimonial.name}</p>
-                                <p className="text-accent text-sm">{testimonial.role}</p>
-                            </div>
-                        </div>
-                    ))}
+                    {/* Testimonials removed as data is pending */}
                 </div>
             </section>
         </main>
