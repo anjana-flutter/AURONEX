@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auronex | Liquid Intelligence</title>
+    <title>Auronex | The OS for Logistics</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Manrope:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
 
     <!-- Tailwind CSS -->
@@ -20,17 +20,20 @@
             theme: {
                 extend: {
                     colors: {
-                        'void': '#050505',
-                        'charcoal': '#0A0A0A',
-                        'gold': '#9D7422',
-                        'muted': '#888888',
+                        'gunmetal': '#0A0A0A',
+                        'gunmetal-light': '#111111',
+                        'electric-blue': '#3B82F6',
+                        'neon-silver': '#E5E7EB',
                     },
                     fontFamily: {
-                        'serif': ['Playfair Display', 'serif'],
-                        'sans': ['Manrope', 'sans-serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
                     },
                     letterSpacing: {
-                        'ultra': '0.1em',
+                        'tight-custom': '-0.02em',
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
                     }
                 }
             }
@@ -39,389 +42,494 @@
 
     <style>
         body {
-            background: linear-gradient(180deg, #050505 0%, #0A0A0A 100%);
-            color: #E5E5E5;
+            background: radial-gradient(circle at top, #111111 0%, #0A0A0A 100%);
+            color: #FFFFFF;
         }
 
-        html.lenis {
-            height: auto;
+        /* Global Border Rule */
+        .glass-card,
+        .glass-header,
+        .glass-nav,
+        .stat-card,
+        .service-card,
+        .product-card,
+        .input-field {
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .lenis.lenis-smooth {
-            scroll-behavior: auto;
+        /* Glassmorphism - Optimized for Performance */
+        .glass-header {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
-
-        .lenis.lenis-stopped {
-            overflow: hidden;
-        }
-
-        .lenis.lenis-scrolling iframe {
-            pointer-events: none;
-        }
-
-        /* Floating Dock Menu */
-        .dock-menu {
+        .glass-nav {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        /* Service Row Hover */
-        .service-row {
-            border-left: 2px solid transparent;
-            transition: all 0.3s ease;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        .service-row:hover {
-            border-left-color: #9D7422;
-            padding-left: 1rem;
-            color: #9D7422;
+        /* Mobile optimization - reduce blur on small screens */
+        @media (max-width: 768px) {
+
+            .glass-header,
+            .glass-nav {
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+
+            .glass-card {
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
         }
 
-        /* Product Cards */
-        .product-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Glow Effect on Hover */
+        .glow-hover {
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .glow-hover:hover {
+            color: #3B82F6;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Shimmer Animation for CTA */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .shimmer-btn {
+            background: linear-gradient(90deg,
+                    #3B82F6 0%,
+                    #60A5FA 25%,
+                    #3B82F6 50%,
+                    #60A5FA 75%,
+                    #3B82F6 100%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Spotlight Effect for Bento Grid */
+        .spotlight-card {
             position: relative;
             overflow: hidden;
         }
 
-        .product-card::before {
+        .spotlight-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(157, 116, 34, 0.1) 0%, transparent 100%);
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(59, 130, 246, 0.15) 0%,
+                    transparent 50%);
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
-        .product-card:hover::before {
+        .spotlight-card:hover::before {
             opacity: 1;
         }
 
-        .product-card .card-content {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
+        /* 3D Gradient Orb */
+        .gradient-orb {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at 30% 30%,
+                    #3B82F6 0%,
+                    #1E40AF 50%,
+                    #0A0A0A 100%);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .product-card:hover .card-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Live Badge Pulse */
-        @keyframes pulse {
+        @keyframes float {
 
             0%,
             100% {
-                opacity: 1;
+                transform: translateY(0px) scale(1);
             }
 
             50% {
-                opacity: 0.5;
+                transform: translateY(-20px) scale(1.05);
             }
         }
 
-        .live-badge {
-            animation: pulse 2s ease-in-out infinite;
+        /* Terminal/Code Block Style */
+        .terminal-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Fast Snap Animations */
+        .snap-in {
+            animation: snapIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        @keyframes snapIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Grid Pattern Background (Subtle) */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
     </style>
 </head>
 
 <body class="font-sans antialiased">
 
-    <!-- FIXED LOGO -->
-    <div class="fixed top-8 left-8 z-50 fade-up">
-        <a href="index.html">
-            <img src="logo.png" alt="Auronex" class="h-16 w-auto" style="filter: brightness(0) invert(1);">
-        </a>
-    </div>
+    <!-- STICKY HEADER -->
+    <header class="glass-header fixed top-0 left-0 right-0 z-50 py-4 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center">
+                <img src="logo.png" alt="Auronex" class="h-10 md:h-12 w-auto" style="filter: brightness(0) invert(1);">
+            </a>
 
-    <!-- FLOATING DOCK MENU -->
-    <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 fade-up">
-        <div class="dock-menu px-6 py-4 rounded-full flex items-center space-x-8">
-            <a href="index.html"
-                class="text-xs uppercase tracking-ultra text-white hover:text-gold transition-colors">Home</a>
-            <a href="services.html"
-                class="text-xs uppercase tracking-ultra text-muted hover:text-gold transition-colors">Services</a>
-            <a href="products.html"
-                class="text-xs uppercase tracking-ultra text-muted hover:text-gold transition-colors">Products</a>
-            <a href="about.html"
-                class="text-xs uppercase tracking-ultra text-muted hover:text-gold transition-colors">About</a>
-            <a href="contact.html"
-                class="bg-gold text-void px-6 py-2 rounded-full text-xs uppercase tracking-ultra font-semibold hover:bg-opacity-90 transition-all">Connect</a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-xs font-mono uppercase tracking-wider text-white glow-hover">Home</a>
+                <a href="services.html"
+                    class="text-xs font-mono uppercase tracking-wider text-neon-silver glow-hover">Services</a>
+                <a href="products.html"
+                    class="text-xs font-mono uppercase tracking-wider text-neon-silver glow-hover">Products</a>
+                <a href="about.html"
+                    class="text-xs font-mono uppercase tracking-wider text-neon-silver glow-hover">About</a>
+                <a href="contact.html"
+                    class="shimmer-btn text-gunmetal px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider font-semibold">Connect</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white" id="mobile-menu-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
         </div>
-    </nav>
 
-    <!-- HERO SECTION -->
-    <section class="min-h-screen flex flex-col justify-center items-center px-4 py-32 relative">
-        <div class="max-w-6xl mx-auto text-center">
+        <!-- Mobile Navigation -->
+        <nav id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-white/10">
+            <div class="flex flex-col space-y-3">
+                <a href="index.html" class="text-xs font-mono uppercase tracking-wider text-white">Home</a>
+                <a href="services.html" class="text-xs font-mono uppercase tracking-wider text-neon-silver">Services</a>
+                <a href="products.html" class="text-xs font-mono uppercase tracking-wider text-neon-silver">Products</a>
+                <a href="about.html" class="text-xs font-mono uppercase tracking-wider text-neon-silver">About</a>
+                <a href="contact.html"
+                    class="shimmer-btn text-gunmetal px-6 py-2 rounded-full text-xs font-mono uppercase tracking-wider font-semibold text-center">Connect</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION - "The Interface" -->
+    <section class="min-h-screen flex flex-col justify-center items-center px-4 py-32 relative grid-bg">
+        <!-- 3D Gradient Orb -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gradient-orb"></div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10">
             <!-- Small Label -->
-            <div class="mb-12 fade-up">
-                <span class="text-xs uppercase tracking-ultra text-muted">Auronex Systems</span>
+            <div class="mb-8 snap-in">
+                <span class="text-xs font-mono uppercase tracking-wider text-neon-silver">AURONEX SYSTEMS // v2.0</span>
             </div>
 
             <!-- Main Headline -->
-            <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-normal text-white mb-8 leading-tight fade-up">
-                Seamless Travel.
+            <h1
+                class="font-sans text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight-custom snap-in">
+                The OS for Logistics.
             </h1>
 
             <!-- Subheadline -->
-            <div class="mb-12 fade-up">
-                <p class="font-serif text-3xl md:text-4xl text-gold italic">Liquid Intelligence.</p>
+            <div class="mb-12 snap-in">
+                <p class="text-lg md:text-xl text-electric-blue font-semibold">Precision. Speed. Intelligence.</p>
             </div>
 
             <!-- Description -->
-            <p class="text-base md:text-lg text-muted max-w-3xl mx-auto leading-relaxed mb-20 fade-up">
-                Auronex bridges the gap between digital precision and physical movement, delivering enterprise-grade
-                solutions for modern hospitality.
+            <p class="text-sm md:text-base text-neon-silver max-w-2xl mx-auto leading-relaxed mb-16 snap-in">
+                Enterprise-grade logistics platform engineered for modern hospitality. Real-time tracking, automated
+                workflows, and intelligent analytics.
             </p>
 
-            <!-- Stats Bar -->
-            <div
-                class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 pt-12 border-t border-white border-opacity-10 fade-up">
-                <div class="text-center">
-                    <div class="font-serif text-4xl md:text-5xl text-white mb-2">500+</div>
-                    <div class="text-xs uppercase tracking-ultra text-muted">Fleets</div>
+            <!-- Terminal-Style Stats -->
+            <div class="terminal-block rounded-lg p-6 md:p-8 max-w-4xl mx-auto snap-in">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                    <div class="text-left">
+                        <div class="text-xs font-mono text-electric-blue mb-1">FLEETS</div>
+                        <div class="text-2xl md:text-3xl font-mono font-bold text-white">500+</div>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-xs font-mono text-electric-blue mb-1">KM_TRACKED</div>
+                        <div class="text-2xl md:text-3xl font-mono font-bold text-white">2M+</div>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-xs font-mono text-electric-blue mb-1">RETENTION</div>
+                        <div class="text-2xl md:text-3xl font-mono font-bold text-white">98%</div>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-xs font-mono text-electric-blue mb-1">SUPPORT</div>
+                        <div class="text-2xl md:text-3xl font-mono font-bold text-white">24/7</div>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <div class="font-serif text-4xl md:text-5xl text-white mb-2">2M+</div>
-                    <div class="text-xs uppercase tracking-ultra text-muted">Km Tracked</div>
-                </div>
-                <div class="text-center">
-                    <div class="font-serif text-4xl md:text-5xl text-white mb-2">98%</div>
-                    <div class="text-xs uppercase tracking-ultra text-muted">Retention</div>
-                </div>
-                <div class="text-center">
-                    <div class="font-serif text-4xl md:text-5xl text-white mb-2">24/7</div>
-                    <div class="text-xs uppercase tracking-ultra text-muted">Global Support</div>
+                <div class="mt-6 pt-6 border-t border-white/10">
+                    <p class="text-xs font-mono text-neon-silver">
+                        <span class="text-green-400">●</span> STATUS: OPERATIONAL // LATENCY: 12ms // UPTIME: 99.9%
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SERVICES MATRIX (The Collection) -->
-    <section class="py-32 px-4">
-        <div class="max-w-6xl mx-auto">
-            <!-- Section Title -->
-            <div class="mb-20 fade-up">
-                <h2 class="font-serif text-4xl md:text-6xl text-white mb-4">The Collection</h2>
-                <p class="text-xs uppercase tracking-ultra text-muted">Service Domains</p>
-            </div>
-
-            <!-- Tech Domain -->
-            <div class="mb-20 fade-up">
-                <div class="mb-8 pb-4 border-b border-white border-opacity-10">
-                    <div class="text-xs uppercase tracking-ultra text-gold mb-2">01 — Technology</div>
-                    <h3 class="font-serif text-3xl md:text-4xl text-white">Tech Domain</h3>
-                </div>
-
-                <div class="space-y-6 ml-0 md:ml-12">
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">Web & App Development</h4>
-                            <p class="text-sm text-muted max-w-md">Custom enterprise applications built with modern
-                                frameworks and best practices</p>
-                        </div>
-                    </div>
-
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">SaaS Architecture</h4>
-                            <p class="text-sm text-muted max-w-md">Scalable cloud infrastructure with enterprise-level
-                                security and compliance</p>
-                        </div>
-                    </div>
-
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">IT Integration</h4>
-                            <p class="text-sm text-muted max-w-md">Seamless connectivity between existing systems and
-                                new platforms</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobility Domain -->
-            <div class="fade-up">
-                <div class="mb-8 pb-4 border-b border-white border-opacity-10">
-                    <div class="text-xs uppercase tracking-ultra text-gold mb-2">02 — Mobility</div>
-                    <h3 class="font-serif text-3xl md:text-4xl text-white">Mobility Domain</h3>
-                </div>
-
-                <div class="space-y-6 ml-0 md:ml-12">
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">Corporate Fleet</h4>
-                            <p class="text-sm text-muted max-w-md">Advanced fleet management with real-time tracking and
-                                analytics</p>
-                        </div>
-                    </div>
-
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">Event Logistics</h4>
-                            <p class="text-sm text-muted max-w-md">End-to-end transportation management for corporate
-                                events</p>
-                        </div>
-                    </div>
-
-                    <div class="service-row py-4 cursor-pointer">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h4 class="text-lg md:text-xl text-white mb-2 md:mb-0">Chauffeur Services</h4>
-                            <p class="text-sm text-muted max-w-md">Premium executive transport with professional
-                                chauffeurs</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRODUCT SHOWCASE (Proprietary Core) -->
-    <section class="py-32 px-4">
+    <!-- SERVICES SECTION - "The Bento Grid" -->
+    <section class="py-16 md:py-32 px-4">
         <div class="max-w-7xl mx-auto">
             <!-- Section Title -->
-            <div class="mb-20 fade-up">
-                <h2 class="font-serif text-4xl md:text-6xl text-white mb-4">Proprietary Core</h2>
-                <p class="text-xs uppercase tracking-ultra text-muted">Enterprise Technology Stack</p>
+            <div class="mb-12 md:mb-20">
+                <h2 class="font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 tracking-tight-custom">
+                    Service Matrix</h2>
+                <p class="text-xs font-mono uppercase tracking-wider text-electric-blue">INTEGRATED SOLUTIONS</p>
+            </div>
+
+            <!-- Bento Grid - Responsive -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <!-- Large Card - SaaS Integration -->
+                <div
+                    class="glass-card spotlight-card rounded-2xl p-6 md:p-8 md:col-span-2 lg:row-span-2 hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <div class="text-xs font-mono text-electric-blue mb-2">01 // TECHNOLOGY</div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-white tracking-tight-custom">SaaS Integration
+                            </h3>
+                        </div>
+                        <svg class="w-12 h-12 text-electric-blue opacity-50" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-neon-silver leading-relaxed mb-6">
+                        Scalable cloud infrastructure with enterprise-level security and compliance. Seamless
+                        connectivity between existing systems and new platforms.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="text-xs font-mono text-white/70">→ Web & App Development</div>
+                        <div class="text-xs font-mono text-white/70">→ Cloud Architecture</div>
+                        <div class="text-xs font-mono text-white/70">→ IT Integration</div>
+                    </div>
+                </div>
+
+                <!-- Tall Card - Fleet Management -->
+                <div
+                    class="glass-card spotlight-card rounded-2xl p-6 md:p-8 lg:row-span-2 hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="mb-6">
+                        <div class="text-xs font-mono text-electric-blue mb-2">02 // MOBILITY</div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white tracking-tight-custom mb-4">Fleet
+                            Management</h3>
+                    </div>
+
+                    <!-- Live Data Graph Simulation -->
+                    <div class="terminal-block rounded-lg p-4 mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-mono text-green-400">LIVE DATA</span>
+                            <span class="text-xs font-mono text-white/50">12:44:24</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <div class="text-xs font-mono text-white/70 w-20">ACTIVE:</div>
+                                <div class="flex-1 bg-white/10 rounded-full h-2">
+                                    <div class="bg-electric-blue h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <div class="text-xs font-mono text-white ml-2">425</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-xs font-mono text-white/70 w-20">IDLE:</div>
+                                <div class="flex-1 bg-white/10 rounded-full h-2">
+                                    <div class="bg-neon-silver h-2 rounded-full" style="width: 15%"></div>
+                                </div>
+                                <div class="text-xs font-mono text-white ml-2">75</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-neon-silver leading-relaxed">
+                        Advanced fleet management with real-time GPS tracking and analytics.
+                    </p>
+                </div>
+
+                <!-- Wide Card - Corporate Mobility -->
+                <div
+                    class="glass-card spotlight-card rounded-2xl p-6 md:p-8 md:col-span-2 hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <div class="text-xs font-mono text-electric-blue mb-2">03 // ENTERPRISE</div>
+                            <h3 class="text-2xl md:text-3xl font-bold text-white tracking-tight-custom mb-4">Corporate
+                                Mobility</h3>
+                            <p class="text-sm text-neon-silver leading-relaxed mb-4">
+                                Premium executive transport with professional chauffeurs and end-to-end event logistics
+                                management.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="text-xs font-mono px-3 py-1 bg-white/5 rounded-full border border-white/10">Chauffeur
+                                    Services</span>
+                                <span
+                                    class="text-xs font-mono px-3 py-1 bg-white/5 rounded-full border border-white/10">Event
+                                    Logistics</span>
+                                <span
+                                    class="text-xs font-mono px-3 py-1 bg-white/5 rounded-full border border-white/10">Route
+                                    Optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Service Card -->
+                <div
+                    class="glass-card spotlight-card rounded-2xl p-6 md:p-8 hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="text-xs font-mono text-electric-blue mb-2">04 // ANALYTICS</div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight-custom mb-3">Data Intelligence
+                    </h3>
+                    <p class="text-sm text-neon-silver leading-relaxed">
+                        Real-time analytics and reporting dashboards for data-driven decision making.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT SHOWCASE -->
+    <section class="py-16 md:py-32 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Title -->
+            <div class="mb-12 md:mb-20">
+                <h2 class="font-sans text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 tracking-tight-custom">
+                    Proprietary Core</h2>
+                <p class="text-xs font-mono uppercase tracking-wider text-electric-blue">ENTERPRISE TECHNOLOGY STACK</p>
             </div>
 
             <!-- Product Cards -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                 <!-- FMS Card -->
-                <div class="product-card rounded-2xl overflow-hidden group cursor-pointer fade-up">
-                    <div class="relative h-[600px]">
-                        <!-- Background -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div
+                    class="glass-card rounded-2xl overflow-hidden group hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="relative h-[500px] md:h-[600px]">
+                        <!-- Background with Icon -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/20 to-gunmetal-light">
                             <div class="absolute inset-0 flex items-center justify-center opacity-10">
-                                <svg class="w-96 h-96" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"
+                                <svg class="w-64 h-64" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
                                         d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7" />
                                 </svg>
                             </div>
                         </div>
 
                         <!-- Content -->
-                        <div class="relative h-full p-12 flex flex-col justify-between">
+                        <div class="relative h-full p-8 md:p-12 flex flex-col justify-between">
                             <!-- Top -->
                             <div>
-                                <div class="flex items-center space-x-3 mb-6">
-                                    <span class="live-badge inline-block w-2 h-2 bg-gold rounded-full"></span>
-                                    <span class="text-xs uppercase tracking-ultra text-gold">LIVE</span>
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <span class="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                    <span class="text-xs font-mono uppercase tracking-wider text-green-400">LIVE</span>
                                 </div>
-                                <div class="text-xs uppercase tracking-ultra text-muted mb-4">Fleet Management</div>
-                                <h3 class="font-serif text-5xl text-white mb-6">FMS</h3>
+                                <div class="text-xs font-mono text-neon-silver mb-3">FLEET MANAGEMENT SYSTEM</div>
+                                <h3
+                                    class="font-sans text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight-custom">
+                                    FMS</h3>
                             </div>
 
-                            <!-- Bottom - Reveals on Hover -->
-                            <div class="card-content">
-                                <div class="space-y-3 mb-8">
-                                    <div class="text-sm text-gray-300">→ Live GPS Tracking</div>
-                                    <div class="text-sm text-gray-300">→ Automated Billing</div>
-                                    <div class="text-sm text-gray-300">→ Driver Allocation</div>
-                                    <div class="text-sm text-gray-300">→ Route Optimization</div>
+                            <!-- Bottom -->
+                            <div>
+                                <div class="terminal-block rounded-lg p-4 mb-6">
+                                    <div class="space-y-2 text-xs font-mono">
+                                        <div class="text-white/70">→ Live GPS Tracking</div>
+                                        <div class="text-white/70">→ Automated Billing</div>
+                                        <div class="text-white/70">→ Driver Allocation</div>
+                                        <div class="text-white/70">→ Route Optimization</div>
+                                    </div>
                                 </div>
-                                <a href="fms.html"
-                                    class="inline-block text-xs uppercase tracking-ultra text-gold border-b border-gold pb-1 hover:text-white hover:border-white transition-colors">
-                                    Explore System
-                                </a>
+                                <div class="text-xs font-mono text-neon-silver">
+                                    v2.0 // Latency: 12ms // Status: <span class="text-green-400">Stable</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- CRM Card -->
-                <div class="product-card rounded-2xl overflow-hidden group cursor-pointer fade-up">
-                    <div class="relative h-[600px]">
-                        <!-- Background -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-purple-900 to-gray-800 grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div
+                    class="glass-card rounded-2xl overflow-hidden group hover:border-electric-blue/50 transition-all duration-300">
+                    <div class="relative h-[500px] md:h-[600px]">
+                        <!-- Background with Icon -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-gunmetal-light">
                             <div class="absolute inset-0 flex items-center justify-center opacity-10">
-                                <svg class="w-96 h-96" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3"
+                                <svg class="w-64 h-64" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             </div>
                         </div>
 
                         <!-- Content -->
-                        <div class="relative h-full p-12 flex flex-col justify-between">
+                        <div class="relative h-full p-8 md:p-12 flex flex-col justify-between">
                             <!-- Top -->
                             <div>
-                                <div class="flex items-center space-x-3 mb-6">
-                                    <span class="live-badge inline-block w-2 h-2 bg-gold rounded-full"></span>
-                                    <span class="text-xs uppercase tracking-ultra text-gold">LIVE</span>
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <span class="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                    <span class="text-xs font-mono uppercase tracking-wider text-green-400">LIVE</span>
                                 </div>
-                                <div class="text-xs uppercase tracking-ultra text-muted mb-4">Hospitality Relations
-                                </div>
-                                <h3 class="font-serif text-5xl text-white mb-6">CRM</h3>
+                                <div class="text-xs font-mono text-neon-silver mb-3">HOSPITALITY RELATIONS</div>
+                                <h3
+                                    class="font-sans text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight-custom">
+                                    CRM</h3>
                             </div>
 
-                            <!-- Bottom - Reveals on Hover -->
-                            <div class="card-content">
-                                <div class="space-y-3 mb-8">
-                                    <div class="text-sm text-gray-300">→ Guest Profiling</div>
-                                    <div class="text-sm text-gray-300">→ Lead Retention</div>
-                                    <div class="text-sm text-gray-300">→ Booking History</div>
-                                    <div class="text-sm text-gray-300">→ Analytics Dashboard</div>
+                            <!-- Bottom -->
+                            <div>
+                                <div class="terminal-block rounded-lg p-4 mb-6">
+                                    <div class="space-y-2 text-xs font-mono">
+                                        <div class="text-white/70">→ Guest Profiling</div>
+                                        <div class="text-white/70">→ Lead Retention</div>
+                                        <div class="text-white/70">→ Booking History</div>
+                                        <div class="text-white/70">→ Analytics Dashboard</div>
+                                    </div>
                                 </div>
-                                <a href="crm.html"
-                                    class="inline-block text-xs uppercase tracking-ultra text-gold border-b border-gold pb-1 hover:text-white hover:border-white transition-colors">
-                                    Explore System
-                                </a>
+                                <div class="text-xs font-mono text-neon-silver">
+                                    v2.0 // Latency: 8ms // Status: <span class="text-green-400">Stable</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="py-32 px-4">
-        <div class="max-w-6xl mx-auto">
-            <!-- Section Title -->
-            <div class="mb-20 fade-up">
-                <h2 class="font-serif text-4xl md:text-6xl text-white mb-4">Industry Voices</h2>
-                <p class="text-xs uppercase tracking-ultra text-muted">Client Perspectives</p>
-            </div>
-
-            <!-- Testimonials Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Testimonial 1 -->
-                <div class="fade-up">
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 italic font-serif">
-                        "Auronex transformed our event logistics. The real-time tracking and automated billing saved us
-                        countless hours."
-                    </p>
-                    <div class="border-t border-white border-opacity-10 pt-6">
-                        <div class="font-serif text-xl text-white mb-1">Rajesh K.</div>
-                        <div class="text-xs uppercase tracking-ultra text-muted">Velvet Events</div>
-                    </div>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="fade-up">
-                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 italic font-serif">
-                        "The CRM platform's guest profiling capabilities have revolutionized how we manage client
-                        relationships. Essential to our operations."
-                    </p>
-                    <div class="border-t border-white border-opacity-10 pt-6">
-                        <div class="font-serif text-xl text-white mb-1">Sarah M.</div>
-                        <div class="text-xs uppercase tracking-ultra text-muted">Global Logistics</div>
                     </div>
                 </div>
             </div>
@@ -429,32 +537,32 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-20 px-4 border-t border-white border-opacity-10">
+    <footer class="py-16 md:py-20 px-4 border-t border-white/10">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
                 <!-- Brand -->
                 <div class="md:col-span-2">
-                    <img src="logo.png" alt="Auronex" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);">
-                    <p class="text-sm text-muted leading-relaxed max-w-md">
-                        Liquid intelligence for modern hospitality. Bridging digital precision with physical movement.
+                    <img src="logo.png" alt="Auronex" class="h-12 w-auto mb-4" style="filter: brightness(0) invert(1);">
+                    <p class="text-sm font-mono text-neon-silver leading-relaxed max-w-md">
+                        Precision logistics for modern hospitality. Engineered for speed, built for scale.
                     </p>
                 </div>
 
                 <!-- Platform -->
                 <div>
-                    <div class="text-xs uppercase tracking-ultra text-gold mb-6">Platform</div>
-                    <ul class="space-y-3 text-sm text-muted">
+                    <div class="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">PLATFORM</div>
+                    <ul class="space-y-2 text-sm font-mono text-neon-silver">
                         <li><a href="products.html" class="hover:text-white transition-colors">Products</a></li>
                         <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
-                        <li><a href="fms.html" class="hover:text-white transition-colors">FMS</a></li>
-                        <li><a href="crm.html" class="hover:text-white transition-colors">CRM</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FMS</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">CRM</a></li>
                     </ul>
                 </div>
 
                 <!-- Company -->
                 <div>
-                    <div class="text-xs uppercase tracking-ultra text-gold mb-6">Company</div>
-                    <ul class="space-y-3 text-sm text-muted">
+                    <div class="text-xs font-mono uppercase tracking-wider text-electric-blue mb-4">COMPANY</div>
+                    <ul class="space-y-2 text-sm font-mono text-neon-silver">
                         <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
                         <li><a href="contact.html" class="hover:text-white transition-colors">Connect</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
@@ -464,9 +572,9 @@
             </div>
 
             <!-- Copyright -->
-            <div class="border-t border-white border-opacity-10 pt-8">
-                <p class="text-xs uppercase tracking-ultra text-muted text-center">
-                    © 2025 Auronex Solutions. All Rights Reserved.
+            <div class="border-t border-white/10 pt-8">
+                <p class="text-xs font-mono uppercase tracking-wider text-neon-silver text-center">
+                    © 2025 AURONEX SOLUTIONS // ALL RIGHTS RESERVED
                 </p>
             </div>
         </div>
@@ -475,103 +583,69 @@
     <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Lenis Smooth Scroll
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smooth: true,
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // ENHANCED HERO SECTION ANIMATIONS
-        // Hero elements with staggered entrance
-        const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-        // Animate hero elements in sequence
-        heroTimeline
-            .from('.fade-up', {
-                y: 80,
-                opacity: 0,
-                duration: 1.4,
-                stagger: 0.2,
-                ease: "power4.out"
-            })
-            .from('h1', {
-                scale: 0.9,
-                opacity: 0,
-                duration: 1.6,
-                ease: "elastic.out(1, 0.5)"
-            }, "-=1.2")
-            .from('.text-gold', {
-                opacity: 0,
-                x: -30,
-                duration: 1,
-                ease: "power2.out"
-            }, "-=0.8");
-
-        // Stats counter animation
-        const stats = document.querySelectorAll('.grid .text-center');
-        stats.forEach((stat, index) => {
-            gsap.from(stat, {
-                scale: 0.8,
-                opacity: 0,
-                duration: 0.8,
-                delay: 1.5 + (index * 0.1),
-                ease: "back.out(1.7)"
+        // Spotlight Effect - Track Mouse Position
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
             });
         });
 
-        // Continuous subtle floating animation for headline
-        gsap.to('h1', {
-            y: -10,
-            duration: 3,
-            ease: "power1.inOut",
-            yoyo: true,
-            repeat: -1
+        // Fast Snap-In Animations (EaseOutQuart)
+        gsap.utils.toArray('.snap-in').forEach((element, index) => {
+            gsap.from(element, {
+                y: 30,
+                opacity: 0,
+                duration: 0.4,
+                delay: index * 0.1,
+                ease: "power4.out"
+            });
         });
 
-        // GSAP Fade-Up Animations for other sections
-        gsap.utils.toArray('section:not(:first-child) .fade-up').forEach((element, index) => {
-            gsap.from(element, {
-                y: 50,
+        // Scroll-triggered animations for sections
+        gsap.utils.toArray('section:not(:first-child)').forEach(section => {
+            gsap.from(section.children, {
+                y: 40,
                 opacity: 0,
-                duration: 1.2,
-                ease: "power3.out",
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "power4.out",
                 scrollTrigger: {
-                    trigger: element,
-                    start: "top 85%",
+                    trigger: section,
+                    start: "top 80%",
                     toggleActions: "play none none none"
                 }
             });
         });
 
-        // Service Row Animations
-        document.querySelectorAll('.service-row').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                gsap.to(row, {
-                    x: 8,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
 
-            row.addEventListener('mouseleave', () => {
-                gsap.to(row, {
-                    x: 0,
-                    duration: 0.3,
-                    ease: "power2.out"
-                });
-            });
+            if (currentScroll > 100) {
+                header.style.backdropFilter = 'blur(24px)';
+            } else {
+                header.style.backdropFilter = 'blur(20px)';
+            }
+
+            lastScroll = currentScroll;
         });
     </script>
 
