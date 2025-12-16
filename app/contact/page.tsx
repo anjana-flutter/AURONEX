@@ -1,6 +1,7 @@
 "use client";
 
-import { COMPANY_INFO } from '@/app/lib/data';
+
+import { SITE_CONFIG } from '@/lib/data';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 export default function ContactPage() {
@@ -24,7 +25,7 @@ export default function ContactPage() {
                                     <input type="text" id="name" className="w-full bg-primary border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors" placeholder="John Doe" />
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">Email id</label>
                                     <input type="email" id="email" className="w-full bg-primary border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors" placeholder="john@example.com" />
                                 </div>
                             </div>
@@ -60,7 +61,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-2">Visit Us</h3>
-                                <p className="text-gray-400">{COMPANY_INFO.contact.address}</p>
+                                <p className="text-gray-400">{SITE_CONFIG.contact.address}</p>
                             </div>
                         </div>
 
@@ -70,7 +71,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-2">Email Us</h3>
-                                <p className="text-gray-400">{COMPANY_INFO.contact.email}</p>
+                                <p className="text-gray-400">{SITE_CONFIG.contact.email}</p>
                             </div>
                         </div>
 
@@ -80,7 +81,7 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-2">Call Us</h3>
-                                <p className="text-gray-400">{COMPANY_INFO.contact.phone}</p>
+                                <p className="text-gray-400">{SITE_CONFIG.contact.phone}</p>
                             </div>
                         </div>
 
