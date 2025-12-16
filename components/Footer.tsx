@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Twitter, Linkedin, Instagram, ArrowRight } from "lucide-react";
-import { SITE_CONFIG, NAVIGATION, SERVICES, PRODUCTS } from "@/lib/data";
+import { Twitter, Linkedin, Instagram, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { SITE_CONFIG, NAVIGATION, PRODUCTS } from "@/lib/data";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -11,7 +11,7 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
                     {/* Brand Column */}
-                    <div className="lg:col-span-5 space-y-6">
+                    <div className="lg:col-span-4 space-y-6">
                         <Link href="/" className="inline-block">
                             <div className="relative w-[180px] h-auto">
                                 <Image
@@ -36,7 +36,7 @@ export default function Footer() {
                     </div>
 
                     {/* Links Column */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-2">
                         <h4 className="text-white font-semibold mb-6 tracking-wide">Company</h4>
                         <ul className="space-y-4">
                             {NAVIGATION.filter(n => !n.isButton).map(item => (
@@ -53,16 +53,45 @@ export default function Footer() {
                     </div>
 
                     {/* Products Column */}
-                    <div className="lg:col-span-4">
+                    <div className="lg:col-span-3">
                         <h4 className="text-white font-semibold mb-6 tracking-wide">Solutions</h4>
                         <ul className="space-y-4">
-                            {Object.entries(PRODUCTS).map(([slug, product]) => (
-                                <li key={slug}>
-                                    <Link href={`/products/${slug}`} className="text-gray-400 hover:text-white transition-colors text-sm block">
+                            {PRODUCTS.map((product) => (
+                                <li key={product.slug}>
+                                    <Link href={`/products/${product.slug}`} className="text-gray-400 hover:text-white transition-colors text-sm block">
                                         {product.title}
                                     </Link>
                                 </li>
                             ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact Column */}
+                    <div className="lg:col-span-3">
+                        <h4 className="text-white font-semibold mb-6 tracking-wide">Contact Us</h4>
+                        <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                                <div className="mt-1 w-5 h-5 rounded bg-white/5 flex items-center justify-center flex-shrink-0 text-accent">
+                                    <MapPin size={14} />
+                                </div>
+                                <span className="text-sm text-gray-400 leading-relaxed">{SITE_CONFIG.contact.address}</span>
+                            </li>
+                            <li>
+                                <a href={`tel:${SITE_CONFIG.contact.phone}`} className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                                    <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center text-accent group-hover:bg-white group-hover:text-black transition-colors">
+                                        <Phone size={14} />
+                                    </div>
+                                    {SITE_CONFIG.contact.phone}
+                                </a>
+                            </li>
+                            <li>
+                                <a href={`mailto:${SITE_CONFIG.contact.email}`} className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors group">
+                                    <div className="w-5 h-5 rounded bg-white/5 flex items-center justify-center text-accent group-hover:bg-white group-hover:text-black transition-colors">
+                                        <Mail size={14} />
+                                    </div>
+                                    {SITE_CONFIG.contact.email}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

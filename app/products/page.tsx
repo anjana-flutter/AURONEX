@@ -1,4 +1,4 @@
-import { PRODUCTS } from '@/app/lib/data';
+import { PRODUCTS } from '@/lib/data';
 import ProductCard from '@/components/ProductCard';
 
 export default function ProductsPage() {
@@ -22,6 +22,7 @@ export default function ProductsPage() {
                                 icon={product.icon}
                                 slug={product.slug}
                                 specs={product.specs}
+                                status={product.status}
                             />
                         </div>
                     ))}

@@ -6,12 +6,18 @@ interface ServiceCardProps {
     description: string;
     icon: LucideIcon;
     slug: string;
+    status?: string;
 }
 
-const ServiceCard = ({ title, description, icon: Icon, slug }: ServiceCardProps) => {
+const ServiceCard = ({ title, description, icon: Icon, slug, status }: ServiceCardProps) => {
     return (
         <Link href={`/services/${slug}`} className="group block h-full">
-            <div className="bg-white/5 border border-white/10 p-8 rounded-xl h-full transition-all duration-300 hover:bg-white/10 hover:border-accent/30 hover:-translate-y-1">
+            <div className="bg-white/5 border border-white/10 p-8 rounded-xl h-full transition-all duration-300 hover:bg-white/10 hover:border-accent/30 hover:-translate-y-1 relative overflow-hidden">
+                {status === 'Upcoming' && (
+                    <div className="absolute top-4 right-4 bg-white/10 text-gray-400 text-xs px-3 py-1 rounded-full font-medium border border-white/10">
+                        Coming Soon
+                    </div>
+                )}
                 <div className="bg-blue-500/10 w-14 h-14 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
                     <Icon className="text-accent w-7 h-7" />
                 </div>

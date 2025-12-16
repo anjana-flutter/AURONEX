@@ -5,24 +5,24 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export async function generateStaticParams() {
-    return Object.keys(PRODUCTS).map((slug) => ({
-        slug,
+    return PRODUCTS.map((product) => ({
+        slug: product.slug,
     }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
-    const product = PRODUCTS[resolvedParams.slug as keyof typeof PRODUCTS];
+    const product = PRODUCTS.find(p => p.slug === resolvedParams.slug);
     if (!product) return { title: "Product Not Found" };
     return {
         title: `${product.title} | Auronex`,
-        description: product.description,
+        description: product.shortDescription,
     };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
-    const product = PRODUCTS[resolvedParams.slug as keyof typeof PRODUCTS];
+    const product = PRODUCTS.find(p => p.slug === resolvedParams.slug);
 
     if (!product) {
         notFound();
@@ -49,11 +49,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                                 {product.status === 'Upcoming' && <span className="text-xs border border-gray-700 px-2 py-0.5 rounded text-gray-400">COMING SOON</span>}
                             </div>
                             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight leading-tight">{product.title}</h1>
-                            <p className="text-xl md:text-2xl text-gray-400 font-light">{product.subtitle}</p>
+                            <p className="text-xl md:text-2xl text-gray-400 font-light">{product.shortDescription}</p>
                         </div>
 
                         <p className="text-lg text-gray-300 leading-relaxed border-l-2 border-white/10 pl-6">
-                            {product.description}
+                            {product.fullDescription}
                         </p>
 
                         <div className="pt-8">
@@ -68,10 +68,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             Key Features
                         </h3>
                         <ul className="space-y-4">
-                            {product.features.map((feature, idx) => (
+                            {product.specs.map((spec, idx) => (
                                 <li key={idx} className="flex items-start group">
                                     <CheckCircle2 size={20} className="mr-3 text-gray-500 group-hover:text-white transition-colors mt-0.5 flex-shrink-0" />
-                                    <span className="text-gray-300 group-hover:text-white transition-colors">{feature}</span>
+                                    <span className="text-gray-300 group-hover:text-white transition-colors">{spec}</span>
                                 </li>
                             ))}
                         </ul>

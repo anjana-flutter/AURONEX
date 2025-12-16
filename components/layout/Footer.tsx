@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
-import { COMPANY_INFO } from '@/app/lib/data';
+import { SITE_CONFIG } from '@/lib/data';
 
 const Footer = () => {
     return (
@@ -11,10 +11,10 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="col-span-1 md:col-span-1">
                         <Link href="/" className="text-2xl font-bold text-white tracking-tight mb-4 block">
-                            {COMPANY_INFO.name.toUpperCase()}
+                            {SITE_CONFIG.name.toUpperCase()}
                         </Link>
                         <p className="text-sm text-gray-400 mb-6 leading-relaxed">
-                            {COMPANY_INFO.description}
+                            {SITE_CONFIG.description}
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="text-gray-400 hover:text-accent transition-colors"><Twitter size={20} /></a>
@@ -52,22 +52,22 @@ const Footer = () => {
                         <ul className="space-y-3">
                             <li className="flex items-start">
                                 <MapPin size={18} className="mr-2 mt-1 text-accent flex-shrink-0" />
-                                <span>{COMPANY_INFO.contact.address}</span>
+                                <span>{SITE_CONFIG.contact.address}</span>
                             </li>
                             <li className="flex items-center">
                                 <Phone size={18} className="mr-2 text-accent flex-shrink-0" />
-                                <span>{COMPANY_INFO.contact.phone}</span>
+                                <span>{SITE_CONFIG.contact.phone}</span>
                             </li>
                             <li className="flex items-center">
                                 <Mail size={18} className="mr-2 text-accent flex-shrink-0" />
-                                <span>{COMPANY_INFO.contact.email}</span>
+                                <span>{SITE_CONFIG.contact.email}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</p>
                 </div>
             </div>
         </footer>

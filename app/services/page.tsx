@@ -1,4 +1,4 @@
-import { SERVICES } from '@/app/lib/data';
+import { SERVICES } from '@/lib/data';
 import ServiceCard from '@/components/ServiceCard';
 
 export default function ServicesPage() {
@@ -20,6 +20,7 @@ export default function ServicesPage() {
                                 description={service.shortDescription}
                                 icon={service.icon}
                                 slug={service.slug}
+                                status={service.status}
                             />
                         </div>
                     ))}

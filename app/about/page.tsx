@@ -1,4 +1,5 @@
-import { COMPANY_INFO, ABOUT_CONTENT } from '@/app/lib/data';
+import { ABOUT_CONTENT } from '@/lib/data';
+import Image from 'next/image';
 import { Target, Lightbulb, Heart } from 'lucide-react';
 
 export default function AboutPage() {
@@ -25,10 +26,12 @@ export default function AboutPage() {
                         </p>
                     </div>
                     <div className="relative h-96 w-full rounded-2xl overflow-hidden shadow-2xl bg-white/5 border border-white/10">
-                        {/* Placeholder for About Image */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-primary flex items-center justify-center">
-                            <span className="text-white/20 text-6xl font-bold">IMAGE PLACEHOLDER</span>
-                        </div>
+                        <Image
+                            src={ABOUT_CONTENT.image}
+                            alt="Our Story"
+                            fill
+                            className="object-cover hover:scale-105 transition-transform duration-700"
+                        />
                     </div>
                 </div>
 

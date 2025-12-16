@@ -129,13 +129,14 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {Object.entries(SERVICES).slice(0, 4).map(([slug, service]) => (
-                            <div key={slug} className="service-card">
+                        {SERVICES.slice(0, 4).map((service) => (
+                            <div key={service.slug} className="service-card">
                                 <ServiceCard
                                     title={service.title}
-                                    description={service.description}
+                                    description={service.shortDescription}
                                     icon={service.icon}
-                                    slug={slug}
+                                    slug={service.slug}
+                                    status={service.status}
                                 />
                             </div>
                         ))}

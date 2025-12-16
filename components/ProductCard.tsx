@@ -8,9 +8,10 @@ interface ProductCardProps {
     icon: LucideIcon;
     slug: string;
     specs: string[];
+    status?: string;
 }
 
-const ProductCard = ({ title, description, category, icon: Icon, slug, specs }: ProductCardProps) => {
+const ProductCard = ({ title, description, category, icon: Icon, slug, specs, status }: ProductCardProps) => {
     return (
         <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-accent/30 transition-all duration-300 flex flex-col h-full">
             <div className="p-8 flex-grow">
@@ -18,9 +19,16 @@ const ProductCard = ({ title, description, category, icon: Icon, slug, specs }: 
                     <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center">
                         <Icon className="text-accent w-6 h-6" />
                     </div>
-                    <span className="bg-blue-900/30 text-accent text-xs px-3 py-1 rounded-full font-medium border border-blue-500/20">
-                        {category}
-                    </span>
+                    <div className="flex gap-2">
+                        <span className="bg-blue-900/30 text-accent text-xs px-3 py-1 rounded-full font-medium border border-blue-500/20">
+                            {category}
+                        </span>
+                        {status === 'Upcoming' && (
+                            <span className="bg-white/10 text-gray-400 text-xs px-3 py-1 rounded-full font-medium border border-white/10">
+                                Coming Soon
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
@@ -43,7 +51,7 @@ const ProductCard = ({ title, description, category, icon: Icon, slug, specs }: 
                     href={`/products/${slug}`}
                     className="w-full flex items-center justify-center bg-transparent border border-gray-600 hover:border-accent text-white hover:text-accent font-medium py-3 rounded-lg transition-all duration-300 group"
                 >
-                    Learn More
+                    {status === 'Upcoming' ? 'View Details' : 'Learn More'}
                     <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
             </div>

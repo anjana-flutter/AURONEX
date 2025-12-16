@@ -5,24 +5,24 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export async function generateStaticParams() {
-    return Object.keys(SERVICES).map((slug) => ({
-        slug,
+    return SERVICES.map((service) => ({
+        slug: service.slug,
     }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
-    const service = SERVICES[resolvedParams.slug as keyof typeof SERVICES];
+    const service = SERVICES.find(s => s.slug === resolvedParams.slug);
     if (!service) return { title: "Service Not Found" };
     return {
         title: `${service.title} | Auronex`,
-        description: service.description,
+        description: service.shortDescription,
     };
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
-    const service = SERVICES[resolvedParams.slug as keyof typeof SERVICES];
+    const service = SERVICES.find(s => s.slug === resolvedParams.slug);
 
     if (!service) {
         notFound();
@@ -43,7 +43,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">{service.title}</h1>
                     <p className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl leading-normal">
-                        {service.description}
+                        {service.fullDescription}
                     </p>
                 </div>
 
