@@ -60,7 +60,7 @@ export const SERVICES = [
             "24/7 Concierge Support"
         ],
         icon: Plane,
-        image: "/images/luxury-travel.jpg", // Placeholder
+        image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80",
         status: "Upcoming"
     },
     {
@@ -76,7 +76,7 @@ export const SERVICES = [
             "Asset Management"
         ],
         icon: Building2,
-        image: "/images/hotel-mgmt.jpg",
+        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80",
         status: "Upcoming"
     },
     {
@@ -92,7 +92,7 @@ export const SERVICES = [
             "Business Travel Logistics"
         ],
         icon: Briefcase,
-        image: "/images/corporate.jpg",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80",
         status: "Upcoming"
     },
     {
@@ -108,7 +108,7 @@ export const SERVICES = [
             "Customs & Compliance Handling"
         ],
         icon: Globe,
-        image: "/images/logistics.jpg",
+        image: "https://images.unsplash.com/photo-1494412574643-35d3d4018d2e?auto=format&fit=crop&q=80",
         status: "Upcoming"
     }
 ];

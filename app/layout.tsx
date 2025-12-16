@@ -29,7 +29,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+        <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`} suppressHydrationWarning>
             <body>
                 <Navbar />
                 {children}
